@@ -1,0 +1,13 @@
+{
+  "author_date": "2026-09-23T13:50:04+02:00",
+  "author_display_name": "vfd003-ual",
+  "content_policy": "generic attribution only; no source content or account email",
+  "kind": "sanitized-source-contribution",
+  "project": "lightgbm",
+  "sequence": 15,
+  "work_area": "model evaluation",
+  "work_categories": [
+    "Python code",
+    "notebooks"
+  ]
+}
