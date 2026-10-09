@@ -1,0 +1,14 @@
+{
+  "author_date": "2026-10-09T09:54:46+02:00",
+  "author_display_name": "CIESOL Dev",
+  "content_policy": "generic attribution only; no source content or account email",
+  "kind": "sanitized-source-contribution",
+  "project": "lstm",
+  "sequence": 1,
+  "work_area": "implementation and maintenance",
+  "work_categories": [
+    "Python code",
+    "configuration",
+    "notebooks"
+  ]
+}
