@@ -1,0 +1,15 @@
+{
+  "author_date": "2026-10-07T13:32:06+02:00",
+  "author_display_name": "vfd003-ual",
+  "content_policy": "generic attribution only; no source content or account email",
+  "kind": "sanitized-source-contribution",
+  "project": "lightgbm",
+  "sequence": 31,
+  "work_area": "edge benchmarking",
+  "work_categories": [
+    "Python code",
+    "configuration",
+    "documentation",
+    "notebooks"
+  ]
+}

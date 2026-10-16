@@ -1,0 +1,15 @@
+{
+  "author_date": "2026-10-16T10:03:03+02:00",
+  "author_display_name": "Víctor Fernández Díaz",
+  "content_policy": "generic attribution only; no source content or account email",
+  "kind": "sanitized-source-contribution",
+  "project": "lightgbm",
+  "sequence": 38,
+  "work_area": "multiclass classification",
+  "work_categories": [
+    "Python code",
+    "configuration",
+    "documentation",
+    "notebooks"
+  ]
+}
