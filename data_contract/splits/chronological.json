@@ -1,0 +1,9 @@
+{
+  "schema_version": "physical-ciesol-splits-v1",
+  "train": {"rows": 172873, "first": "2020-10-10 00:00:03", "last": "2020-12-08 23:59:34"},
+  "validation": {"rows": 28800, "first": "2020-12-09 00:00:04", "last": "2020-12-18 23:59:39"},
+  "test": {"rows": 31680, "first": "2020-12-19 00:00:09", "last": "2020-12-29 23:59:57"},
+  "timestamp_field": "FECHA",
+  "time_zone": "source timestamps are timezone-naive; local wall time asserted by source artifacts, not converted",
+  "ordering": "strictly increasing, unique and disjoint"
+}

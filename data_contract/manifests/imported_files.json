@@ -1,0 +1,660 @@
+{
+  "schema_version": "source-import-v1",
+  "import_date": "2026-10-27",
+  "sources": {
+    "lightgbm": "https://github.com/vfd003-ual/Clasificaci-n-y-correcci-n.git",
+    "lstm": "https://github.com/helqadiri03/CIESOL_PROJECT.git"
+  },
+  "files": [
+    {
+      "destination": "approaches/lightgbm/v7_reference/02_inyeccion_anomalias_full_v3.ipynb",
+      "source": "v7_palmerillas_vent_null/Antigua/02_inyeccion_anomalias_full_v3.ipynb",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "603e40c8d1cb388a5006fc0207858ee7c22d94a4453b0d5e7c81fac46ac23524",
+      "destination_sha256": "6a54726fcebbd039992429b72fa73b6e6e21313a9011f76cde9e8cd5fd3ed9db",
+      "bytes": 140909,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lightgbm/v7_reference/04b_modelo_deteccion_lightgbm_full_v3.ipynb",
+      "source": "v7_palmerillas_vent_null/Antigua/04b_modelo_deteccion_lightgbm_full_v3.ipynb",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "1b0f615c5b3606efb021e1d883ca8b672d57ee1e8a2935ea7290adf1ae08cc3c",
+      "destination_sha256": "83c96dae6f0aeb8e86d6339325ee2ac8f0324b76a3c845fcd2850d9fca8a4f5c",
+      "bytes": 120441,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lightgbm/v7_reference/05b_modelo_clasificacion_lightgbm_full_v3.ipynb",
+      "source": "v7_palmerillas_vent_null/Antigua/05b_modelo_clasificacion_lightgbm_full_v3.ipynb",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "8655830766fc6aa69da357063270c7c61d3bba25e80dc8cd1221158ff4d8936e",
+      "destination_sha256": "d6df2e8205aea45f59bf6a25c19a76765abdc00b878bb633442472e88700b37b",
+      "bytes": 20240,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lightgbm/v7_reference/config.py",
+      "source": "v7_palmerillas_vent_null/Test_2_anos/config.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "c0fa29b5a1ea9c137b81e41ce1cc0c498b70a7ae3a122311f847eb52381351ce",
+      "destination_sha256": "c0fa29b5a1ea9c137b81e41ce1cc0c498b70a7ae3a122311f847eb52381351ce",
+      "bytes": 37060,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v7_reference/README_TEST_2_ANOS.md",
+      "source": "v7_palmerillas_vent_null/Test_2_anos/README_TEST_2_ANOS.md",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "9a06e763e0203712086d8dd96e671a28e11d0a6b7080e6981a29a9ba6ee41862",
+      "destination_sha256": "9a06e763e0203712086d8dd96e671a28e11d0a6b7080e6981a29a9ba6ee41862",
+      "bytes": 13045,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/config.py",
+      "source": "v8_online_2meses/config.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "5f4d8b6e30cc2a15e326ba7000b22739e312d05e63b3054655ca91879653acc7",
+      "destination_sha256": "5f4d8b6e30cc2a15e326ba7000b22739e312d05e63b3054655ca91879653acc7",
+      "bytes": 11139,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/lstm_common_lightgbm/__init__.py",
+      "source": "v8_online_2meses/lstm_common_lightgbm/__init__.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "9d9670bc2b7ccb1167d6655ee12ef4474490e2bdd1632df4d4563238b0fe970a",
+      "destination_sha256": "9d9670bc2b7ccb1167d6655ee12ef4474490e2bdd1632df4d4563238b0fe970a",
+      "bytes": 291,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/lstm_common_lightgbm/comparison.py",
+      "source": "v8_online_2meses/lstm_common_lightgbm/comparison.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "045b5688eec1ab8bd3d89fa6da0a57df42d033f3df337c7a9df3166ee89e82ec",
+      "destination_sha256": "045b5688eec1ab8bd3d89fa6da0a57df42d033f3df337c7a9df3166ee89e82ec",
+      "bytes": 3965,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/lstm_common_lightgbm/pipeline.py",
+      "source": "v8_online_2meses/lstm_common_lightgbm/pipeline.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "79df6b3ff170796906466ef33e320c278c890d8962a2cf0de00338ec3637b6f1",
+      "destination_sha256": "79df6b3ff170796906466ef33e320c278c890d8962a2cf0de00338ec3637b6f1",
+      "bytes": 21738,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/lstm_common_lightgbm/README.md",
+      "source": "v8_online_2meses/lstm_common_lightgbm/README.md",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "6e94e722d6e6bc0b605b380255993621c74d212b9bd5f9df3a95fd35c76af50e",
+      "destination_sha256": "6e94e722d6e6bc0b605b380255993621c74d212b9bd5f9df3a95fd35c76af50e",
+      "bytes": 3172,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/binary_calibration.json",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/binary_calibration.json",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "707343342d5d8f5b238ce07de4525b72069c6bcff0765bde33c204c3e220b4f2",
+      "destination_sha256": "707343342d5d8f5b238ce07de4525b72069c6bcff0765bde33c204c3e220b4f2",
+      "bytes": 232,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/binary_manifest.json",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/binary_manifest.json",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "598ef42683cec32ab6e3daa644500dcb2bdbe014bef9172aeaa0291dd37ee4d2",
+      "destination_sha256": "598ef42683cec32ab6e3daa644500dcb2bdbe014bef9172aeaa0291dd37ee4d2",
+      "bytes": 4439,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/binary_model.txt",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/binary_model.txt",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "33a423993c63443a0400a9611e2f1ad96bbbe3a61a59371c10451b308a7a963e",
+      "destination_sha256": "33a423993c63443a0400a9611e2f1ad96bbbe3a61a59371c10451b308a7a963e",
+      "bytes": 1379905,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/binary_validation.json",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/binary_validation.json",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "d1014bc7a5736a4eddc032e4529f1121f25c51a6f34031cdd5bd69f7c78de494",
+      "destination_sha256": "d1014bc7a5736a4eddc032e4529f1121f25c51a6f34031cdd5bd69f7c78de494",
+      "bytes": 332,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/clock_audit.json",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/clock_audit.json",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "2f1a321e63bf7a62421505ab9d7d5483382900522c5fffb63b33d4c11983d6ce",
+      "destination_sha256": "2f1a321e63bf7a62421505ab9d7d5483382900522c5fffb63b33d4c11983d6ce",
+      "bytes": 1374,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/manifest.json",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/manifest.json",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "dd3d66d2c05cd928c4737b96003d6e38cb59a010b2200838365d44d2f56c377c",
+      "destination_sha256": "dd3d66d2c05cd928c4737b96003d6e38cb59a010b2200838365d44d2f56c377c",
+      "bytes": 2490,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/multiclass_model.txt",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/multiclass_model.txt",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "c1b64581c3327356ead76d15e6e89184e146ce860a1f9dc6a4684671aa206b81",
+      "destination_sha256": "c1b64581c3327356ead76d15e6e89184e146ce860a1f9dc6a4684671aa206b81",
+      "bytes": 1383817,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/reference_run/multiclass_validation.json",
+      "source": "v8_online_2meses/lstm_common_lightgbm/data/runs/20261021T120316012126Z/multiclass_validation.json",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "aa842816a85dcae639e9daf4f7d009bada7167bf66e8c1b4aa99e873c7b1f1f2",
+      "destination_sha256": "aa842816a85dcae639e9daf4f7d009bada7167bf66e8c1b4aa99e873c7b1f1f2",
+      "bytes": 801,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/requirements-orin-py310.lock",
+      "source": "v8_online_2meses/requirements-orin-py310.lock",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "61ffd1948a7734977b34b56b72e7dbc1bce9971288039474022c77a360ecb57e",
+      "destination_sha256": "61ffd1948a7734977b34b56b72e7dbc1bce9971288039474022c77a360ecb57e",
+      "bytes": 357,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/requirements.txt",
+      "source": "v8_online_2meses/requirements.txt",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "ab1162916d3497b13d1165f6c5df97dd2efc162179c8fa85ad3641d2e5d4e79a",
+      "destination_sha256": "ab1162916d3497b13d1165f6c5df97dd2efc162179c8fa85ad3641d2e5d4e79a",
+      "bytes": 135,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/seis_anomalias/__init__.py",
+      "source": "v8_online_2meses/seis_anomalias/__init__.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "d522557501ba2e0669b9a65ff30d07f737adaddd91d322588fd71d542ecdce48",
+      "destination_sha256": "d522557501ba2e0669b9a65ff30d07f737adaddd91d322588fd71d542ecdce48",
+      "bytes": 52,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/seis_anomalias/common_physical_test.py",
+      "source": "v8_online_2meses/seis_anomalias/common_physical_test.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "d0af1a4dd141b92671b3af2009f2429678cfb4e22b33bf01c88a5b528846c1cc",
+      "destination_sha256": "d0af1a4dd141b92671b3af2009f2429678cfb4e22b33bf01c88a5b528846c1cc",
+      "bytes": 10701,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/seis_anomalias/correction.py",
+      "source": "v8_online_2meses/seis_anomalias/correction.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "d9a6404db728288469a8eb473661722b857f4ade12db847fbeec0c6f89f3c2d2",
+      "destination_sha256": "d9a6404db728288469a8eb473661722b857f4ade12db847fbeec0c6f89f3c2d2",
+      "bytes": 9950,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/seis_anomalias/data.py",
+      "source": "v8_online_2meses/seis_anomalias/data.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "163a2d193f6e417f6c212ab08c396a736a9d1a7658243058e6a2719717aaf970",
+      "destination_sha256": "163a2d193f6e417f6c212ab08c396a736a9d1a7658243058e6a2719717aaf970",
+      "bytes": 5222,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/seis_anomalias/pipeline.py",
+      "source": "v8_online_2meses/seis_anomalias/pipeline.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "99acbca42d02c0ad9489c77384a6b12a86d14be98a1e19ff808f0ac18ac0628b",
+      "destination_sha256": "99acbca42d02c0ad9489c77384a6b12a86d14be98a1e19ff808f0ac18ac0628b",
+      "bytes": 24692,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/seis_anomalias/settings.py",
+      "source": "v8_online_2meses/seis_anomalias/settings.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "1f3e542a21c8c5027e756222ce15eaae581bb0b17cc3206544587640eb54dfb8",
+      "destination_sha256": "1f3e542a21c8c5027e756222ce15eaae581bb0b17cc3206544587640eb54dfb8",
+      "bytes": 2403,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/__init__.py",
+      "source": "v8_online_2meses/src/__init__.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "4cb9d256a9312e50832cb70737c704245db0af479587d184585f68a96f6e872c",
+      "destination_sha256": "4cb9d256a9312e50832cb70737c704245db0af479587d184585f68a96f6e872c",
+      "bytes": 69,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/artifacts.py",
+      "source": "v8_online_2meses/src/artifacts.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "ba4412bb7fb4871aa7326ea46e95de251e73d6431595f73296194835364e0761",
+      "destination_sha256": "ba4412bb7fb4871aa7326ea46e95de251e73d6431595f73296194835364e0761",
+      "bytes": 2047,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/binary_postprocess.py",
+      "source": "v8_online_2meses/src/binary_postprocess.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "32c08536230bf9987b471f48f5595ad4aa9732d4d1b4958de7544532012a442d",
+      "destination_sha256": "32c08536230bf9987b471f48f5595ad4aa9732d4d1b4958de7544532012a442d",
+      "bytes": 14509,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/feature_selection.py",
+      "source": "v8_online_2meses/src/feature_selection.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "5c8c31b9ff9ad9f498ebb62d498e7e2908bc89397710ace0d35e2ccd14f72a5a",
+      "destination_sha256": "5c8c31b9ff9ad9f498ebb62d498e7e2908bc89397710ace0d35e2ccd14f72a5a",
+      "bytes": 6251,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/features.py",
+      "source": "v8_online_2meses/src/features.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "c39dd0131d8149fdd5e674168b8dcd3249651a95af41402d394de26125492074",
+      "destination_sha256": "c39dd0131d8149fdd5e674168b8dcd3249651a95af41402d394de26125492074",
+      "bytes": 17847,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/inference_backends.py",
+      "source": "v8_online_2meses/src/inference_backends.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "112e4b3e93ca5ae0b2250bdb970d9e64e2b9399ca474670354f316862775fc7e",
+      "destination_sha256": "112e4b3e93ca5ae0b2250bdb970d9e64e2b9399ca474670354f316862775fc7e",
+      "bytes": 9513,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/injection.py",
+      "source": "v8_online_2meses/src/injection.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "2cd22f160f8d81630ac88901df405e8b22445b4b0fe1d624c88f2df0dd1a6ada",
+      "destination_sha256": "2cd22f160f8d81630ac88901df405e8b22445b4b0fe1d624c88f2df0dd1a6ada",
+      "bytes": 12373,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/model.py",
+      "source": "v8_online_2meses/src/model.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "682e2a75379fc887784f8d51b2165dc5295252a48992e6222319f6b709887ce2",
+      "destination_sha256": "682e2a75379fc887784f8d51b2165dc5295252a48992e6222319f6b709887ce2",
+      "bytes": 20919,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/multiclass_features.py",
+      "source": "v8_online_2meses/src/multiclass_features.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "16a15fb970119098f76a688fd1d2f7f006bfc754bf0c80f947017318dfe376c1",
+      "destination_sha256": "16a15fb970119098f76a688fd1d2f7f006bfc754bf0c80f947017318dfe376c1",
+      "bytes": 4561,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/optimized_features.py",
+      "source": "v8_online_2meses/src/optimized_features.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "c25a27d11f0408ba1e3a231698a92225566fbe2a6b64c9d88f2dbdd09d11190d",
+      "destination_sha256": "c25a27d11f0408ba1e3a231698a92225566fbe2a6b64c9d88f2dbdd09d11190d",
+      "bytes": 18937,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/streaming_detector.py",
+      "source": "v8_online_2meses/src/streaming_detector.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "8950fef630e450331c33fad2f057a062e111dc77d8bcd567a55066762cb48f1a",
+      "destination_sha256": "8950fef630e450331c33fad2f057a062e111dc77d8bcd567a55066762cb48f1a",
+      "bytes": 29557,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/telemetry.py",
+      "source": "v8_online_2meses/src/telemetry.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "e8e16549fdc908a9aa4f1aedcff3dd0a6406a9078a057f650f2c967fa85d7b0a",
+      "destination_sha256": "e8e16549fdc908a9aa4f1aedcff3dd0a6406a9078a057f650f2c967fa85d7b0a",
+      "bytes": 10968,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lightgbm/v8_online_2meses/src/two_stage.py",
+      "source": "v8_online_2meses/src/two_stage.py",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "6f06f70b9bf46c473a728c5ed376d290945f3190aa4bef9801c3b05e0fd01513",
+      "destination_sha256": "6f06f70b9bf46c473a728c5ed376d290945f3190aa4bef9801c3b05e0fd01513",
+      "bytes": 27399,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/01_raw_data_ingestion.ipynb",
+      "source": "notebooks/01_raw_data_ingestion.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "7c96ffecfb0508569208f044286fdaaabf86e31aa0dfe024acd511a95f84ae8e",
+      "destination_sha256": "c9420c06474ec1852f260a6bfa7d6934585bb82b25543ceed6ce0700648c766e",
+      "bytes": 9986,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/04_gap_imputation_and_splitting.ipynb",
+      "source": "notebooks/04_gap_imputation_and_splitting.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "69bf2a89439fa5fba29287cbe1c9a53723ebfee6428fc225a8e5254f293b65bb",
+      "destination_sha256": "7e29a807ee2a787254230f355b5f997fd49af2187e718028f75940fa520a0f69",
+      "bytes": 23556,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/05_synthetic_anomaly_injection.ipynb",
+      "source": "notebooks/05_synthetic_anomaly_injection.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "e9b280c8dec7822be2358a390f1d476c5a25a7dda1f3fd9c410ae18e61b9a5c9",
+      "destination_sha256": "dd92e04909e6048f1264c9010b250dd6144ff05e640bfbb2609f2c9763cf48d7",
+      "bytes": 356679,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/07_missing_value_handling.ipynb",
+      "source": "notebooks/07_missing_value_handling.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "ade5b0b0412188eaa2aafa1df75afecd77d563f39fb1139d442cd522ed7e0b89",
+      "destination_sha256": "4d127615d32d2d952af0a8b423b92d5a4b07fcc1ae802d803f334250752eb345",
+      "bytes": 10393,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/08_scaling.ipynb",
+      "source": "notebooks/08_scaling.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "98723c499dc68601121dcdb669f71461c73dc969322a4b29c26afec21d430734",
+      "destination_sha256": "743c9d0d8374cfb4210bbc6c1684598f72949abf4515bd423a5fd75a51eab44d",
+      "bytes": 10231,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/09_model1_binary_sequence_creation.ipynb",
+      "source": "notebooks/09_model1_binary_sequence_creation.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "ebfdee0415b611c9f39eb3fc85ae19343fba407636aaf492d495df6b1613d798",
+      "destination_sha256": "1f62843b911ff30a21dc5232d89b8ad55a582fa7bacb9f81a1f6f3be14266c3e",
+      "bytes": 16135,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/10_model1_binary_lstm_training.ipynb",
+      "source": "notebooks/10_model1_binary_lstm_training.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "b06a747a8628f058319885ee4fe41c5f594cb0024e882ca0097ece50b3f12919",
+      "destination_sha256": "b9b4485723af64e396952a60745195f964f2a0e3a79125d0d67ede720d26ed2f",
+      "bytes": 64245,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/12b_model2_multiclass_sequence_creation_v2.ipynb",
+      "source": "notebooks/12b_model2_multiclass_sequence_creation_v2.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "18cb3a01a3d503b0740227e1564fabc5b2cc160925383dc20efd09f11b5004c5",
+      "destination_sha256": "6596db4f88c6e62092285a271ff197a862357932279271e9157d07b4eab3b9c6",
+      "bytes": 15703,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/13b_model2_multiclass_lstm_training_v2.ipynb",
+      "source": "notebooks/13b_model2_multiclass_lstm_training_v2.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "61c2859a4ec3003ed3c074b68d77e1cbb757510a2b6446e557746ca03c789805",
+      "destination_sha256": "369b695b496c4546555c13dbfb0dc90bd3bb141f5dbb9cdcdcac454be32eea2b",
+      "bytes": 45902,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/notebooks/15_end_to_end_cascade_pipeline_benchmark.ipynb",
+      "source": "notebooks/15_end_to_end_cascade_pipeline_benchmark.ipynb",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "1b3c490de1d4b22fd98f1a9e076a81b4bd5ba77e889e92f5fc9db5c31ee90c6d",
+      "destination_sha256": "2f609c7a89b345bf284cc932997dfec1dcebe37fe6dc0b9a5ff4c8f964fe6715",
+      "bytes": 30982,
+      "transform": "notebook outputs removed"
+    },
+    {
+      "destination": "approaches/lstm/README_source.md",
+      "source": "README.md",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "6fcc918e2d021068282663a4df9c36a081a0c05e5d09aff9634ff8c6dc7e200c",
+      "destination_sha256": "6fcc918e2d021068282663a4df9c36a081a0c05e5d09aff9634ff8c6dc7e200c",
+      "bytes": 50429,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/__init__.py",
+      "source": "src/__init__.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destination_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/config_injection.py",
+      "source": "src/config_injection.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "6b886211952839b248fc3dc277a2c77b8a0472601cef1c44e25cca18fd444f28",
+      "destination_sha256": "6b886211952839b248fc3dc277a2c77b8a0472601cef1c44e25cca18fd444f28",
+      "bytes": 26306,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/data_loader.py",
+      "source": "src/data_loader.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "ed0d396bdb21a421ca9529686a5f5772b5ade75c25a249d94ab34b2496682a6c",
+      "destination_sha256": "ed0d396bdb21a421ca9529686a5f5772b5ade75c25a249d94ab34b2496682a6c",
+      "bytes": 11527,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/diagnostic_features_model2.py",
+      "source": "src/diagnostic_features_model2.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "c774172ceab84d695f8f3f08ac0a32527c393f0dd4cab52ef0d1f2e9a8f04386",
+      "destination_sha256": "c774172ceab84d695f8f3f08ac0a32527c393f0dd4cab52ef0d1f2e9a8f04386",
+      "bytes": 22274,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/feature_engineering.py",
+      "source": "src/feature_engineering.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "07edb745940ef89da47e1359b55c6573ef530ba65a5b0e68beffa259db880718",
+      "destination_sha256": "07edb745940ef89da47e1359b55c6573ef530ba65a5b0e68beffa259db880718",
+      "bytes": 10521,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/missing_value_handling_before_LSTM.py",
+      "source": "src/missing_value_handling_before_LSTM.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "e7f589f1c3d861cea9aa615d066868aa74eae7a860c231307bb5f51d96a98ab0",
+      "destination_sha256": "e7f589f1c3d861cea9aa615d066868aa74eae7a860c231307bb5f51d96a98ab0",
+      "bytes": 27318,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/multiclass_sequence_creation.py",
+      "source": "src/multiclass_sequence_creation.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "6fa796b0ecad31111a41da330d391f39540394d4be0bcbc2af8d6cae701e7457",
+      "destination_sha256": "6fa796b0ecad31111a41da330d391f39540394d4be0bcbc2af8d6cae701e7457",
+      "bytes": 23991,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/multiclass_sequence_creation_v2.py",
+      "source": "src/multiclass_sequence_creation_v2.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "f36d0dbf7406e5c8bc77ae9dc6452a75c8eff4cc7b3ba68e48a802a36569931d",
+      "destination_sha256": "f36d0dbf7406e5c8bc77ae9dc6452a75c8eff4cc7b3ba68e48a802a36569931d",
+      "bytes": 9474,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/preprocessing.py",
+      "source": "src/preprocessing.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "d23d34320ecfd21bdb0f5bf03b81b842aafe12090a4406c7205e500a927a4c9a",
+      "destination_sha256": "7dcb03a240f3ccd9007edf9c3c4be60bd27bd19f32abc1a948bd8cdde88d6361",
+      "bytes": 57121,
+      "transform": "relative package import adapted"
+    },
+    {
+      "destination": "approaches/lstm/src/scaling.py",
+      "source": "src/scaling.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "a9a7fc579fd2645385ae7bbeb72e7114774a35bcf9a271a47d9c209175dca8d0",
+      "destination_sha256": "a9a7fc579fd2645385ae7bbeb72e7114774a35bcf9a271a47d9c209175dca8d0",
+      "bytes": 13314,
+      "transform": "copied"
+    },
+    {
+      "destination": "approaches/lstm/src/sequence_creation.py",
+      "source": "src/sequence_creation.py",
+      "repository": "lstm",
+      "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
+      "source_sha256": "7837f45f61733dfdfc1f15509f0fbfdba915206a6388f9c306652d3a772ccdab",
+      "destination_sha256": "7837f45f61733dfdfc1f15509f0fbfdba915206a6388f9c306652d3a772ccdab",
+      "bytes": 23243,
+      "transform": "copied"
+    },
+    {
+      "destination": "data_contract/snapshots/sensor_data_raw2.csv",
+      "source": "Dataset/Datos2MesesLimpios/sensor_data_raw2.csv",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "621f3aa590aa3501cf2f8bdd5cd624be26f44eff772633e1254e1666db6a39ba",
+      "destination_sha256": "621f3aa590aa3501cf2f8bdd5cd624be26f44eff772633e1254e1666db6a39ba",
+      "bytes": 31709063,
+      "transform": "copied"
+    },
+    {
+      "destination": "data_contract/snapshots/test_injected_physical.parquet",
+      "source": "Dataset/MismoTest/test_injected_physical.parquet",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "f6ad833659d0d379dc3a1677a8a5c0f9478536dadbb5b80bc6eadf82fa60d4f3",
+      "destination_sha256": "f6ad833659d0d379dc3a1677a8a5c0f9478536dadbb5b80bc6eadf82fa60d4f3",
+      "bytes": 1650725,
+      "transform": "copied"
+    },
+    {
+      "destination": "data_contract/snapshots/train_injected_physical.parquet",
+      "source": "Dataset/MismoTest/train_injected_physical.parquet",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "64f43cd15e121c8a147565aa691ebb3d6bf2d371ffd86824f2ab626dcba5e1a2",
+      "destination_sha256": "64f43cd15e121c8a147565aa691ebb3d6bf2d371ffd86824f2ab626dcba5e1a2",
+      "bytes": 8563814,
+      "transform": "copied"
+    },
+    {
+      "destination": "data_contract/snapshots/validation_injected_physical.parquet",
+      "source": "Dataset/MismoTest/validation_injected_physical.parquet",
+      "repository": "lightgbm",
+      "commit": "83399ba380124f9bc0754990f2afeb195df94d29",
+      "source_sha256": "044d3d23f7a06b98afed94cee741d8f206beb5a8319c70e1a2c56859689a7107",
+      "destination_sha256": "044d3d23f7a06b98afed94cee741d8f206beb5a8319c70e1a2c56859689a7107",
+      "bytes": 1529065,
+      "transform": "copied"
+    }
+  ]
+}

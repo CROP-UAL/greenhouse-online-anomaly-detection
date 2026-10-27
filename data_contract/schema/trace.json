@@ -1,0 +1,14 @@
+{
+  "schema_version": "common-trace-v1",
+  "fields": [
+    "timestamp", "split", "ground_truth_binary", "ground_truth_type",
+    "binary_score", "binary_prediction", "stage_2_executed",
+    "stage_2_prediction", "final_prediction", "episode_id",
+    "model_version", "data_manifest_id"
+  ],
+  "binary_score": "probability from Model 1 before deterministic rules or persistence filters",
+  "binary_prediction": "final Model 1 decision after any native rules or filters",
+  "stage_2_prediction": "null when stage_2_executed is false",
+  "episode_id": "split:source_anomalia_id:contiguous_run; null for normal rows",
+  "target": "timestamp of the physical observation at the end of the causal input history"
+}

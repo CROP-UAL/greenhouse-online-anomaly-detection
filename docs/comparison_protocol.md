@@ -1,0 +1,29 @@
+# Protocolo y estado de la comparación
+
+Fecha: 2026-10-27. Cada fila registra una etapa, evidencia obtenida y trabajo pendiente. Ninguna métrica histórica se publica como resultado comparativo final. CSV, parquets, modelos y resultados permanecen locales y excluidos de Git; solo se versionan código, documentación y metadatos de contrato.
+
+| Etapa | Comprobado | Pendiente |
+| --- | --- | --- |
+| 1. Contrato y taxonomía | Tres hashes congelados, particiones disjuntas y 7 etiquetas canónicas; mapeo español explícito. | Resolver nuevos alias solo con evidencia fuente. |
+| 2. Preparación e inyección | CSV `233381 − 48 + 20 = 233353`; misma secuencia temporal; cero diferencias de sensores en filas normales; replay exacto de 33.591 filas anómalas. | Demostrar paridad del generador aleatorio histórico con semilla 42, separada de la paridad del replay. |
+| 3. Adaptadores | LightGBM v8 original conserva 66 variables, reglas, umbrales y 360 filas causales. LSTM causal prepara 19/146 variables y ventanas de 20. `lightgbm-night-context-v1` se entrenó localmente con 68 variables: añade `is_night` y gradiente firmado de CO₂. | Entrenar LSTM en Linux y validar su entorno real. |
+| 4. Trazas | LightGBM v8 y noche/contexto exportan 31.680 objetivos con los 12 campos y trazas aisladas de Model 2 para 4.395 anomalías verdaderas. `episode_id` divide cada `anomalia_id` en tramos contiguos. | Exportar y emparejar la traza LSTM. |
+| 5. Evaluación | Evaluador común separa Model 1 completo, Model 2 aislado, Model 2 condicionado y cascada. LightGBM v8 registra 482 falsas alarmas y 452 anomalías omitidas; la variante noche/contexto local registra 520 y 478. Son diagnósticos separados, no una comparación emparejada. | Publicar métricas emparejadas solo tras paridad total de timestamps, etiquetas y manifiesto. |
+| 6. Edge | Contrato de informe y adaptadores para v8, LightGBM noche/contexto y LSTM. El benchmark local de noche/contexto coincidió con la traza en sus 20 filas de comprobación. LightGBM cronometra extracción causal, modelos y reglas por objetivo; LSTM cronometra una secuencia de 20 con ventanas preparadas, sin extracción ni escalado. | Medir ambos en Orin Nano con sistema, Python, frameworks, calentamiento y repeticiones registrados; no comparar scopes distintos. La memoria se deja nula si no se mide. |
+| 7. Pruebas | Seis pruebas pasaron en Windows: contrato, reconstrucción, replay, historia entre particiones, causalidad de diagnósticos, trazas y contexto noche/interior-exterior. | Ejecutar entrenamiento LSTM y suite también en Linux/Orin. |
+
+## Semántica de las trazas
+
+`binary_score` es la probabilidad de Model 1 **antes** de reglas y persistencia. `binary_prediction` es la decisión final de Model 1 y determina `stage_2_executed`. `stage_2_prediction` es nulo cuando no se ejecuta Model 2. `final_prediction` es `Normal` en ese caso; en otro caso, la salida de Model 2. `episode_id` deriva de `anomalia_id` y un contador de tramos contiguos dentro de cada partición; se deja nulo en filas normales. La traza aislada de Model 2 contiene todas las anomalías verdaderas, incluidas las omitidas por Model 1, y no representa inferencia operativa.
+
+## Causalidad y versiones
+
+El LSTM histórico importa `shift(-1)`, ventanas centradas y anclas posteriores de interpolación para Model 2. Por tanto, sus resultados históricos no acreditan inferencia online causal. `lstm-causal-v1` conserva las arquitecturas LSTM 64/32, capas densas, dropout, épocas máximas, batch, pesos de clase y callbacks de referencia; adapta diagnósticos temporales a diferencias y ventanas pasadas, usa forward fill causal y mediana ajustada solo en train, y selecciona el umbral binario solo en validation. Es un **experimento nuevo**, no una reproducción numérica del checkpoint histórico.
+
+LightGBM usa las primeras 360 filas de train como historia causal y entrena sobre 172.513 objetivos. El LSTM de 20 observaciones empieza a entrenar en el objetivo 19 y conserva las primeras 19 filas como contexto. Ambos usan las particiones físicas completas y la validación y el test tienen un objetivo por cada timestamp físico; los objetivos iniciales de train excluidos por cada arquitectura quedan registrados como tales.
+
+El LightGBM original no incluye `is_night` entre sus 66 entradas; usa `cos_hour` de `FECHA` para representar la hora. También contiene `delta_temp`, `delta_hum` y una diferencia **absoluta** de CO₂ entre interior y exterior. `lightgbm-night-context-v1` añade `is_night` calculado con la misma regla LSTM (20:00–07:00) y `co2_gradient = XCO2I - PCO2EXT`; reentrena ambos árboles con parámetros originales y conserva la calibración y reglas binarias congeladas. No se mezcla su resultado con el run v8 de referencia. LSTM ya usa `delta_temp`, `delta_hum` y `co2_gradient` con signo. LightGBM calcula estas diferencias sobre lecturas crudas y admite NaN; LSTM las calcula tras su imputación causal. Esta diferencia de tratamiento de faltantes permanece visible.
+
+## Criterio de publicación
+
+Las trazas comparativas deben contener los mismos 31.680 timestamps objetivo de test, iguales verdades y `data_manifest_id`, sin filas faltantes ni solapamiento de particiones. Las métricas de Model 2 aislado, condicionado y del pipeline se rotulan por separado. Las cifras de PC y Jetson Nano históricas se citan solo con su unidad y alcance; ningún informe de Orin Nano se genera por extrapolación.

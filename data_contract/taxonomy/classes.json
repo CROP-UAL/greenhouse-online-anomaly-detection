@@ -1,0 +1,16 @@
+{
+  "schema_version": "seven-class-v1",
+  "binary": ["Normal", "Anomalous"],
+  "anomaly_types": ["Contextual", "Noise", "Correlation deviation", "Missing data", "Out-of-range", "Stuck sensor"],
+  "final_classes": ["Normal", "Contextual", "Noise", "Correlation deviation", "Missing data", "Out-of-range", "Stuck sensor"],
+  "source_to_canonical": {
+    "Contextual": "Contextual",
+    "Ruido": "Noise",
+    "Desviacion de Correlacion": "Correlation deviation",
+    "Datos Faltantes": "Missing data",
+    "Valores Fuera de Rango": "Out-of-range",
+    "Sensor Atascado": "Stuck sensor"
+  },
+  "historical_v7_extra_types": ["Caida Sistema", "Fallo Parcial Sistema"],
+  "historical_v7_extra_type_policy": "Not present as separate targets in the common CIESOL physical snapshots; retain source labels for audit and do not infer a mapping without source evidence"
+}

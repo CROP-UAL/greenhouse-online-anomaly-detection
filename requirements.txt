@@ -1,0 +1,11 @@
+numpy==1.26.4
+pandas==2.2.3
+pyarrow==25.0.1
+scipy==1.13.1
+scikit-learn==1.6.1
+lightgbm==4.6.0
+matplotlib==3.9.4
+joblib==1.6.0
+psutil==7.0.0
+pytest==8.4.2
+tqdm==4.70.1

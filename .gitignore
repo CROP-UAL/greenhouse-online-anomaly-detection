@@ -1,0 +1,52 @@
+# Adaptado de ../Clasificaci-n-y-correcci-n/.gitignore (83399ba).
+# Python y empaquetado
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Entornos y secretos
+.venv/
+.venv_*/
+venv/
+env/
+.deps/
+.env
+
+# Jupyter y sistema
+.ipynb_checkpoints/
+.DS_Store
+__MACOSX/
+*.zip
+
+# Datos físicos, planes de replay y modelos: solo locales, nunca en Git
+*.csv
+*.parquet
+*.keras
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+*.onnx
+*.tflite
+*.npy
+*.npz
+data_contract/snapshots/
+data_contract/manifests/injection_replay.json
+approaches/lightgbm/v8_online_2meses/reference_run/
+
+# Resultados y artefactos generados por esta comparación
+experiments/runs/
+results/traces/
+results/metrics/
+results/reports/
+results/figures/
+approaches/lightgbm/v8_online_2meses/data/
+approaches/lightgbm/v8_online_2meses/lstm_common_lightgbm/data/
+
+# El contrato versiona solo esquemas, particiones, etiquetas, hashes y procedencia.

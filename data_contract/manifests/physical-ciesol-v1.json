@@ -1,0 +1,82 @@
+{
+  "schema_version": "physical-ciesol-v1",
+  "manifest_id": "4cc10ef96d923a326a86c0882a356a4d09d35a6da6553bfdbb60dd80a5f0737c",
+  "splits": {
+    "train": {
+      "rows": 172873,
+      "first": "2020-10-10 00:00:03",
+      "last": "2020-12-08 23:59:34",
+      "sha256": "64f43cd15e121c8a147565aa691ebb3d6bf2d371ffd86824f2ab626dcba5e1a2",
+      "labels": {
+        "Normal": 148407,
+        "Contextual": 6279,
+        "Noise": 5186,
+        "Correlation deviation": 5186,
+        "Missing data": 3457,
+        "Out-of-range": 3457,
+        "Stuck sensor": 901
+      }
+    },
+    "validation": {
+      "rows": 28800,
+      "first": "2020-12-09 00:00:04",
+      "last": "2020-12-18 23:59:39",
+      "sha256": "044d3d23f7a06b98afed94cee741d8f206beb5a8319c70e1a2c56859689a7107",
+      "labels": {
+        "Normal": 24070,
+        "Contextual": 1093,
+        "Noise": 864,
+        "Correlation deviation": 864,
+        "Stuck sensor": 757,
+        "Out-of-range": 576,
+        "Missing data": 576
+      }
+    },
+    "test": {
+      "rows": 31680,
+      "first": "2020-12-19 00:00:09",
+      "last": "2020-12-29 23:59:57",
+      "sha256": "f6ad833659d0d379dc3a1677a8a5c0f9478536dadbb5b80bc6eadf82fa60d4f3",
+      "labels": {
+        "Normal": 27285,
+        "Noise": 950,
+        "Correlation deviation": 950,
+        "Contextual": 705,
+        "Out-of-range": 634,
+        "Missing data": 633,
+        "Stuck sensor": 523
+      }
+    }
+  },
+  "sensors": [
+    "PCO2EXT",
+    "PHEXT",
+    "PRAD",
+    "PRGINT",
+    "PTEXT",
+    "PVV",
+    "XCO2I",
+    "XHINV",
+    "XTINV"
+  ],
+  "classes": [
+    "Normal",
+    "Contextual",
+    "Noise",
+    "Correlation deviation",
+    "Missing data",
+    "Out-of-range",
+    "Stuck sensor"
+  ],
+  "timestamp_policy": "physical FECHA, original jitter retained",
+  "raw_lineage": {
+    "raw_sha256": "621f3aa590aa3501cf2f8bdd5cd624be26f44eff772633e1254e1666db6a39ba",
+    "raw_rows": 233381,
+    "duplicates_removed": 48,
+    "original_rows_in_splits": 233333,
+    "reconstructed_rows": 20,
+    "prepared_rows": 233353,
+    "original_timestamp_sequence_matches": true
+  },
+  "injection_replay_manifest": "injection_replay.json"
+}
