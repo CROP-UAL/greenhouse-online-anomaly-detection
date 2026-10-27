@@ -12,5 +12,5 @@
     "Sensor Atascado": "Stuck sensor"
   },
   "historical_v7_extra_types": ["Caida Sistema", "Fallo Parcial Sistema"],
-  "historical_v7_extra_type_policy": "Not present as separate targets in the common CIESOL physical snapshots; retain source labels for audit and do not infer a mapping without source evidence"
+  "historical_v7_extra_type_policy": "Not present as separate targets in the common Agroconnect physical snapshots; retain source labels for audit and do not infer a mapping without source evidence"
 }

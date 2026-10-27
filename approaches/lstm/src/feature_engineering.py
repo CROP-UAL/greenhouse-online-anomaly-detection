@@ -29,7 +29,7 @@ import pandas as pd
 # CONFIGURATION
 # ============================================================
 
-# Original CIESOL sensor columns used as model inputs.
+# Original Agroconnect sensor columns used as model inputs.
 SENSOR_COLUMNS = [
     "PCO2EXT",
     "PHEXT",
@@ -245,7 +245,7 @@ def engineer_features(
     Parameters
     ----------
     df : pandas.DataFrame
-        Input CIESOL dataframe.
+        Input Agroconnect dataframe.
 
         This can be:
             - injected training data

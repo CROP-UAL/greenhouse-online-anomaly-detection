@@ -28,7 +28,8 @@ def create_plan() -> dict:
     plan.insert(0, "row_index", targets.astype(np.int64))
     PLAN.parent.mkdir(parents=True, exist_ok=True)
     plan.to_parquet(PLAN, index=False)
-    metadata = {"schema_version": "frozen-injection-replay-v1", "source": "CIESOL 05_synthetic_anomaly_injection.ipynb",
+    metadata = {"schema_version": "frozen-injection-replay-v1", "data_source": "Agroconnect",
+                "source_notebook": "05_synthetic_anomaly_injection.ipynb",
                 "historical_base_seed": 42, "replay_uses_random_number_generator": False,
                 "row_count": len(plan), "split_rows": ROWS, "plan_sha256": sha256(PLAN),
                 "meaning": "Full anomalous rows applied to independently rebuilt pre-injection physical data"}

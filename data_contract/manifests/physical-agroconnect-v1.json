@@ -1,5 +1,6 @@
 {
-  "schema_version": "physical-ciesol-v1",
+  "schema_version": "physical-agroconnect-v1",
+  "data_source": "Agroconnect",
   "manifest_id": "4cc10ef96d923a326a86c0882a356a4d09d35a6da6553bfdbb60dd80a5f0737c",
   "splits": {
     "train": {

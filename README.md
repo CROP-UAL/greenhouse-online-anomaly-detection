@@ -1,6 +1,6 @@
 # Greenhouse online anomaly comparison
 
-Comparación controlada entre LightGBM y LSTM sobre los mismos 233.353 instantes físicos CIESOL. LightGBM conserva características causales y reglas; LSTM conserva ventanas de 20 observaciones y tratamiento de ausencias. `v7_palmerillas_vent_null` se conserva como fundamento documentado, con datos y resultados Palmerillas separados.
+Comparación controlada entre LightGBM y LSTM sobre los mismos 233.353 instantes físicos de Agroconnect. LightGBM conserva características causales y reglas; LSTM conserva ventanas de 20 observaciones y tratamiento de ausencias. `v7_palmerillas_vent_null` se conserva como fundamento documentado, con datos y resultados Palmerillas separados.
 
 ## Estado
 

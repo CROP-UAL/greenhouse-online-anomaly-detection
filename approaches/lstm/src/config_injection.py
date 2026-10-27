@@ -2,7 +2,7 @@
 config_injection.py - Adapted Anomaly Injection Configuration for CIESOL
 =========================================================================
 Project: CIESOL Sensor Anomaly Detection
-Dataset: CIESOL Greenhouse Environmental Sensors (~2-month subset: Oct 2020 - Dec 2020)
+Dataset: Agroconnect Greenhouse Environmental Sensors (~2-month subset: Oct 2020 - Dec 2020)
 
 Methodological Alignment & Workflow:
 ------------------------------------
@@ -237,7 +237,7 @@ CONFIG_DATOS_FALTANTES: Dict[str, Any] = {
 # =============================================================================
 
 # Professor methodology: Explicit per-sensor sequence quotas with sensor-specific
-# duration windows derived from natural plateau analysis on CIESOL.
+# duration windows derived from natural plateau analysis on Agroconnect data.
 #
 # Scaling rationale:
 # - Professor train quota: 40 sequences per sensor over ~535 training days.
@@ -261,7 +261,7 @@ CONFIG_SENSOR_ATASCADO: Dict[str, Any] = {
     },
     "num_secuencias_total_train": 32,
     # Sensor-specific duration windows in samples (at 30s sampling rate):
-    # Inherited directly from professor's natural plateau analysis on CIESOL
+    # Inherited directly from professor's natural plateau analysis on Agroconnect data
     "duracion_por_sensor": {
         "PCO2EXT": {"duracion_min": 20, "duracion_max": 40},  # 10 to 20 min
         "PTEXT":   {"duracion_min": 16, "duracion_max": 40},  # 8 to 20 min

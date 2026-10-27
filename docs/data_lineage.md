@@ -1,6 +1,6 @@
-# Procedencia de datos físicos
+# Procedencia de datos físicos de Agroconnect
 
-El CSV `sensor_data_raw2.csv` copiado localmente desde `../Clasificaci-n-y-correcci-n/Dataset/Datos2MesesLimpios` tiene SHA-256 `621f3aa590aa3501cf2f8bdd5cd624be26f44eff772633e1254e1666db6a39ba`. El CSV y los parquets están excluidos de Git. `python run_comparison.py hydrate --lightgbm-source <ruta>` los restaura desde una copia local de la fuente y verifica los hashes.
+Los datos físicos proceden de **Agroconnect**. El CSV `sensor_data_raw2.csv` copiado localmente desde `../Clasificaci-n-y-correcci-n/Dataset/Datos2MesesLimpios` tiene SHA-256 `621f3aa590aa3501cf2f8bdd5cd624be26f44eff772633e1254e1666db6a39ba`. El CSV y los parquets están excluidos de Git. `python run_comparison.py hydrate --lightgbm-source <ruta>` los restaura desde una copia local de la fuente y verifica los hashes.
 
 El cuaderno LSTM `01_raw_data_ingestion.ipynb` ordena por `FECHA` y conserva la primera fila por timestamp. La ejecución importada registra **233.381 − 48 = 233.333** observaciones originales. `04_gap_imputation_and_splitting.ipynb` identifica dos huecos y reconstruye **20** instantes, produciendo **233.353** filas. `shared/data_preparation/verify.py` volvió a ejecutar esas funciones sobre el CSV importado: la secuencia completa de timestamps, las máscaras de filas insertadas y todos los valores de los 12 sensores en filas normales coinciden con las particiones congeladas.
 

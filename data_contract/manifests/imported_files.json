@@ -412,9 +412,9 @@
       "repository": "lstm",
       "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
       "source_sha256": "69bf2a89439fa5fba29287cbe1c9a53723ebfee6428fc225a8e5254f293b65bb",
-      "destination_sha256": "7e29a807ee2a787254230f355b5f997fd49af2187e718028f75940fa520a0f69",
-      "bytes": 23556,
-      "transform": "notebook outputs removed"
+      "destination_sha256": "f4dfdb4ae9b15e628286ee19bc49f8ee9c3114a8ac682369feb0fc9c4e8a4369",
+      "bytes": 23573,
+      "transform": "notebook outputs removed; Agroconnect data attribution corrected"
     },
     {
       "destination": "approaches/lstm/notebooks/05_synthetic_anomaly_injection.ipynb",
@@ -462,9 +462,9 @@
       "repository": "lstm",
       "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
       "source_sha256": "b06a747a8628f058319885ee4fe41c5f594cb0024e882ca0097ece50b3f12919",
-      "destination_sha256": "b9b4485723af64e396952a60745195f964f2a0e3a79125d0d67ede720d26ed2f",
-      "bytes": 64245,
-      "transform": "notebook outputs removed"
+      "destination_sha256": "9c64613f44b60b127cc9c3e232fb1a8a2773a3a19a6d48fa1100cdd5253f90da",
+      "bytes": 64252,
+      "transform": "notebook outputs removed; Agroconnect data attribution corrected"
     },
     {
       "destination": "approaches/lstm/notebooks/12b_model2_multiclass_sequence_creation_v2.ipynb",
@@ -502,9 +502,9 @@
       "repository": "lstm",
       "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
       "source_sha256": "6fcc918e2d021068282663a4df9c36a081a0c05e5d09aff9634ff8c6dc7e200c",
-      "destination_sha256": "6fcc918e2d021068282663a4df9c36a081a0c05e5d09aff9634ff8c6dc7e200c",
-      "bytes": 50429,
-      "transform": "copied"
+      "destination_sha256": "7f1dae446f513dc2fb2e32fae7fbc615fbba46e05b0805e38e8c59913b1a7723",
+      "bytes": 50439,
+      "transform": "copied; Agroconnect data attribution corrected"
     },
     {
       "destination": "approaches/lstm/src/__init__.py",
@@ -522,9 +522,9 @@
       "repository": "lstm",
       "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
       "source_sha256": "6b886211952839b248fc3dc277a2c77b8a0472601cef1c44e25cca18fd444f28",
-      "destination_sha256": "6b886211952839b248fc3dc277a2c77b8a0472601cef1c44e25cca18fd444f28",
-      "bytes": 26306,
-      "transform": "copied"
+      "destination_sha256": "3584c0d0db207b0e59bd9873af5ba86cf948e46b597197da1b5d4f9c79e64a2a",
+      "bytes": 26331,
+      "transform": "copied; Agroconnect data attribution corrected"
     },
     {
       "destination": "approaches/lstm/src/data_loader.py",
@@ -552,9 +552,9 @@
       "repository": "lstm",
       "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
       "source_sha256": "07edb745940ef89da47e1359b55c6573ef530ba65a5b0e68beffa259db880718",
-      "destination_sha256": "07edb745940ef89da47e1359b55c6573ef530ba65a5b0e68beffa259db880718",
-      "bytes": 10521,
-      "transform": "copied"
+      "destination_sha256": "39d74b5ee66ccd36d137c178574f133eac88b6073decf67b5c3c386bf141eea8",
+      "bytes": 10533,
+      "transform": "copied; Agroconnect data attribution corrected"
     },
     {
       "destination": "approaches/lstm/src/missing_value_handling_before_LSTM.py",
@@ -592,9 +592,9 @@
       "repository": "lstm",
       "commit": "f3a5f500c7a4b45e9485653d79aa6b67857657f4",
       "source_sha256": "d23d34320ecfd21bdb0f5bf03b81b842aafe12090a4406c7205e500a927a4c9a",
-      "destination_sha256": "7dcb03a240f3ccd9007edf9c3c4be60bd27bd19f32abc1a948bd8cdde88d6361",
-      "bytes": 57121,
-      "transform": "relative package import adapted"
+      "destination_sha256": "e5d31221e8b7d8501dbe5b50a3135cb087e382288dd150ce11d837ba0fef186c",
+      "bytes": 57166,
+      "transform": "relative package import adapted; Agroconnect data attribution corrected"
     },
     {
       "destination": "approaches/lstm/src/scaling.py",
