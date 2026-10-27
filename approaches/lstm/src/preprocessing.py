@@ -1,5 +1,5 @@
 """
-CIESOL preprocessing — preserve real timestamps, 
+Agroconnect data preprocessing — preserve real timestamps,
 
 .
 
@@ -67,13 +67,13 @@ class PreprocessConfig:
     # Nominal sampling period
     expected_seconds: float = 30.0
 
-    # Inclusive band treated as normal jitter (CIESOL: >95% of intervals in 30–31 s).
+    # Inclusive band treated as normal jitter (Agroconnect: >95% of intervals in 30–31 s).
     # Intervals ABOVE ``normal_interval_max`` become gap candidates.
     # Do not set this so wide that ~60 s looks "normal".
     normal_interval_min: float = 29.0
     normal_interval_max: float = 32.0
 
-    # Gap categories (minutes). Real CIESOL holes sit near ~5m11s / ~5m13s,
+    # Gap categories (minutes). Real Agroconnect holes sit near ~5m11s / ~5m13s,
     # so keep the short/medium boundary configurable.
     short_gap_minutes: float = 5.5
     medium_gap_minutes: float = 10.0
@@ -202,7 +202,7 @@ def load_clean_data(
     path: str | Path = DEFAULT_CLEAN_PATH,
 ) -> pd.DataFrame:
     """
-    Load the cleaned CIESOL parquet and validate schema / dtypes.
+    Load the cleaned Agroconnect parquet and validate schema / dtypes.
 
     Does not overwrite the source file. Extra columns are preserved.
     """
@@ -520,7 +520,7 @@ def experimental_resample_mean(
     """
     OPTIONAL / EXPERIMENTAL — professor reference: ``resample("30s").mean()``.
 
-    Do NOT use blindly on the full CIESOL series: normal 30–31 s jitter would
+    Do NOT use blindly on the full Agroconnect series: normal 30–31 s jitter would
     be distorted and many artificial NaNs created. Kept for comparison only.
     """
     df = _normalize_timestamp_name(df.copy())
@@ -529,7 +529,7 @@ def experimental_resample_mean(
     resampled = timed[sensors].resample(freq).mean()
     logger.warning(
         "experimental_resample_mean(%s): %d → %d rows. "
-        "Not the default CIESOL pipeline.",
+        "Not the default Agroconnect data pipeline.",
         freq,
         len(df),
         len(resampled),
@@ -846,7 +846,7 @@ def check_physical_ranges(
     physical_ranges: Optional[dict[str, tuple[float, float]]] = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
-    Flag out-of-range values using known CIESOL sensor limits.
+    Flag out-of-range values using known Agroconnect sensor limits.
 
     Returns ``(df_with_flags, summary_report)``.
     Does NOT delete or repair values (anomaly-detection project).

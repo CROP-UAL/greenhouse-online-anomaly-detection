@@ -1,4 +1,4 @@
-"""Train and export the separately versioned causal CIESOL LSTM run."""
+"""Train and export the separately versioned causal Agroconnect LSTM run."""
 from __future__ import annotations
 
 import json

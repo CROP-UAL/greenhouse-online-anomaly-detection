@@ -82,5 +82,6 @@ def validate_splits() -> dict[str, object]:
         previous = frame.FECHA.iloc[-1]
         details[name] = {"rows": len(frame), "first": str(frame.FECHA.iloc[0]), "last": str(previous),
                          "sha256": EXPECTED_SHA256[name], "labels": frame.tipo_canonico.value_counts().to_dict()}
-    return {"schema_version": "physical-ciesol-v1", "manifest_id": manifest_id(EXPECTED_SHA256), "splits": details,
+    return {"schema_version": "physical-agroconnect-v1", "data_source": "Agroconnect",
+            "manifest_id": manifest_id(EXPECTED_SHA256), "splits": details,
             "sensors": list(SENSORS), "classes": list(CLASSES), "timestamp_policy": "physical FECHA, original jitter retained"}

@@ -1,6 +1,6 @@
 # CIESOL Sensor Anomaly Detection
 
-A time-series anomaly detection project for CIESOL sensor data. The
+A time-series anomaly detection project for Agroconnect sensor data. The
 system uses a **two-stage LSTM approach**:
 
 1.  **Model 1 --- Binary anomaly detection:** determines whether a
@@ -252,7 +252,7 @@ parsing logic must handle the actual date format consistently.
   -----------------------------------------------------------------------
 
 The sensor descriptions should be checked against the authoritative
-CIESOL instrumentation documentation before publication or operational
+Agroconnect instrumentation documentation before publication or operational
 use. `UVENT_cen` and `UVENT_lN` are treated as contextual variables in
 the anomaly-injection design, while `XTS` is excluded from the selected
 anomaly-target sensors.

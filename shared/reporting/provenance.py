@@ -11,6 +11,14 @@ PARENT = ROOT.parent
 LIGHTGBM = PARENT / "Clasificaci-n-y-correcci-n"
 LSTM = PARENT / "CIESOL_PROJECT"
 OUTPUT = ROOT / "data_contract" / "manifests" / "imported_files.json"
+ATTRIBUTION_CORRECTIONS = {
+    "approaches/lstm/README_source.md",
+    "approaches/lstm/src/feature_engineering.py",
+    "approaches/lstm/src/config_injection.py",
+    "approaches/lstm/src/preprocessing.py",
+    "approaches/lstm/notebooks/04_gap_imputation_and_splitting.ipynb",
+    "approaches/lstm/notebooks/10_model1_binary_lstm_training.ipynb",
+}
 
 
 def _source_path(relative: Path) -> tuple[Path, str, str, str]:
@@ -55,6 +63,8 @@ def create_inventory() -> dict:
         source, repository, commit, transform = _source_path(relative)
         if not source.is_file():
             raise FileNotFoundError(source)
+        if relative.as_posix() in ATTRIBUTION_CORRECTIONS:
+            transform += "; Agroconnect data attribution corrected"
         files.append({"destination": relative.as_posix(), "source": str(source.relative_to(LIGHTGBM if repository == "lightgbm" else LSTM)).replace("\\", "/"),
                       "repository": repository, "commit": commit, "source_sha256": sha256(source),
                       "destination_sha256": sha256(path), "bytes": path.stat().st_size, "transform": transform})

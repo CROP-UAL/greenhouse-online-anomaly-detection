@@ -1,6 +1,6 @@
 # Protocolo y estado de la comparación
 
-Fecha: 2026-10-27. Cada fila registra una etapa, evidencia obtenida y trabajo pendiente. Ninguna métrica histórica se publica como resultado comparativo final. CSV, parquets, modelos y resultados permanecen locales y excluidos de Git; solo se versionan código, documentación y metadatos de contrato.
+Fecha: 2026-10-27. Los datos físicos compartidos proceden de Agroconnect. `CIESOL_PROJECT` identifica el repositorio histórico del código LSTM. Cada fila registra una etapa, evidencia obtenida y trabajo pendiente. Ninguna métrica histórica se publica como resultado comparativo final. CSV, parquets, modelos y resultados permanecen locales y excluidos de Git; solo se versionan código, documentación y metadatos de contrato.
 
 | Etapa | Comprobado | Pendiente |
 | --- | --- | --- |

@@ -1,4 +1,4 @@
-"""Causal adaptation of the CIESOL feature flow for the shared experiment.
+"""Causal adaptation of the Agroconnect feature flow for the shared experiment.
 
 The imported source notebooks remain intact. Their Model 2 centred windows,
 negative shifts and two-sided interpolation require future observations, so
