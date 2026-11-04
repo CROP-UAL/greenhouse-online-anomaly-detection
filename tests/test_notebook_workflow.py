@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import hashlib
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -22,6 +24,20 @@ def test_controlled_notebooks_have_clean_executable_cells() -> None:
                 assert cell["outputs"] == []
                 assert cell["execution_count"] is None
                 compile("".join(cell["source"]), str(path), "exec")
+
+
+@pytest.mark.parametrize("notebook_name", [
+    "01_train_and_export.ipynb", "02_compare_quality.ipynb", "03_jetson_benchmark.ipynb"
+])
+def test_notebook_imports_shared_when_started_from_notebooks_directory(notebook_name: str) -> None:
+    path = ROOT / "notebooks" / notebook_name
+    notebook = json.loads(path.read_text(encoding="utf-8"))
+    first_code = next(cell for cell in notebook["cells"] if cell["cell_type"] == "code")
+    bootstrap = "".join(first_code["source"]).split("from shared.contract import", 1)[0]
+    script = bootstrap + "from shared.contract import ROOT\nassert Path.cwd().resolve() == ROOT\n"
+    completed = subprocess.run([sys.executable, "-c", script], cwd=path.parent,
+                               capture_output=True, text=True, check=False)
+    assert completed.returncode == 0, completed.stderr
 
 
 def test_edge_bundle_rejects_escaping_paths(tmp_path: Path) -> None:
