@@ -116,7 +116,7 @@ def export_test(run: Path) -> tuple[Path, Path]:
     m1, m2, physical, metadata = prepare_features()
     if metadata["data_manifest_id"] != manifest["data_manifest_id"] or metadata["model1_features"] != manifest["feature_contract"]["model1_features"] or metadata["model2_features"] != manifest["feature_contract"]["model2_features"]:
         raise ValueError("LSTM feature or data contract changed")
-    model1 = tf.keras.models.load_model(run / "model1.keras")
+    model1 = tf.keras.models.load_model(run / "model1.keras", compile=False)
     model2 = tf.keras.models.load_model(run / "model2.keras", compile=False)
     x1, targets = windows(m1, "test")
     if len(targets) != len(physical["test"]) or not np.array_equal(targets, np.arange(len(targets))):

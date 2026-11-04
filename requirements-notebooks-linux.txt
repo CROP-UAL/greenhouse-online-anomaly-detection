@@ -1,0 +1,3 @@
+-r requirements-lstm-linux.txt
+ipykernel==6.30.1
+jupyterlab==4.4.10
