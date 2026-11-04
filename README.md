@@ -13,7 +13,7 @@ Comparación controlada entre LightGBM y LSTM sobre los mismos 233.353 instantes
 
 Crear `.venv` siguiendo [docs/environment.md](docs/environment.md). Comandos desde la raíz:
 
-El flujo interactivo está en [notebooks/01_train_and_export.ipynb](notebooks/01_train_and_export.ipynb), [notebooks/02_compare_quality.ipynb](notebooks/02_compare_quality.ipynb) y [notebooks/03_jetson_benchmark.ipynb](notebooks/03_jetson_benchmark.ipynb). Entrenamiento y evaluación se realizan en un PC Linux; las mediciones de rendimiento, en NVIDIA Jetson Orin Nano. Las celdas invocan los adaptadores y el evaluador compartido; sus salidas permanecen fuera de Git.
+El flujo interactivo está en [notebooks/01_train_and_export.ipynb](notebooks/01_train_and_export.ipynb), [notebooks/02_compare_quality.ipynb](notebooks/02_compare_quality.ipynb) y [notebooks/03_jetson_benchmark.ipynb](notebooks/03_jetson_benchmark.ipynb). Los tres pueden ejecutarse en la misma NVIDIA Jetson Orin Nano con un `.venv` compatible; en ese caso el tercero usa los runs y trazas locales y no requiere bundle. También es posible entrenar y evaluar en otro PC Linux y trasladar después un bundle privado. Las celdas invocan los adaptadores y el evaluador compartido; sus salidas permanecen fuera de Git.
 
 ```text
 python run_comparison.py hydrate --lightgbm-source ../Clasificaci-n-y-correcci-n
