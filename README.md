@@ -28,3 +28,9 @@ python run_comparison.py benchmark-lstm --run experiments/runs/lstm_causal_v1/<r
 ```
 
 La evaluación emparejada usa por defecto LightGBM con noche y contexto exterior/interior; `evaluate --lightgbm-reference` permite examinar aparte la referencia v8. Falla si faltan trazas o difieren timestamps, verdad o manifiesto físico. Los resultados generados quedan bajo `results/` y los modelos nuevos bajo `experiments/runs/`, excluidos de Git. `hydrate` exige que los archivos ignorados estén disponibles en el checkout fuente local y verifica cada hash; un clon de Git sin esos archivos debe obtenerlos por separado. Las fuentes, versiones y límites se describen en [la auditoría](docs/integration_audit.md), [el protocolo](docs/comparison_protocol.md), [la procedencia de datos](docs/data_lineage.md) y [la procedencia de código](docs/source_provenance.md).
+
+## Historial y publicación
+
+`main` incluye 41 contribuciones saneadas de LightGBM y 6 de LSTM, con autor visible, fecha y área de trabajo, además del código actual sobre el que se puede seguir trabajando. Son commits reconstruidos; no contienen las revisiones originales de datos, notebooks con salidas ni modelos. `git log --graph --oneline main` muestra ambos historiales.
+
+El control de publicación en `.githooks/pre-push` se activa en cada clon con `git config --local core.hooksPath .githooks`. Antes de sincronizar, ejecutar `.venv/Scripts/python.exe -m shared.reporting.check_push --audit-ref main` en Windows o `.venv/bin/python -m shared.reporting.check_push --audit-ref main` en Linux. Publicar solo la rama revisada con `git push origin main`; las referencias fuente locales no deben enviarse con `--mirror`. El control rechaza historiales fuente, datos, artefactos, salidas de notebooks y posibles claves reconocibles; no sustituye una revisión humana de cambios nuevos.
