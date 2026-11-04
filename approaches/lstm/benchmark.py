@@ -21,7 +21,10 @@ def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
         raise ValueError("LSTM models differ from run manifest")
     model1 = tf.keras.models.load_model(run / "model1.keras", compile=False)
     model2 = tf.keras.models.load_model(run / "model2.keras", compile=False)
-    m1, m2, _, metadata = prepare_features()
+    version_name = manifest["schema_version"]
+    if version_name not in ("lstm-causal-v1", "lstm-causal-v2"):
+        raise ValueError(f"Unknown LSTM schema: {version_name}")
+    m1, m2, _, metadata = prepare_features(stuck_context=version_name == "lstm-causal-v2")
     if metadata["data_manifest_id"] != manifest["data_manifest_id"]:
         raise ValueError("Data manifest changed")
     n = min(rows, len(m1["test"]))
@@ -45,7 +48,7 @@ def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
             durations.append((time.perf_counter_ns() - start) / 1e6)
     elapsed = time.perf_counter() - start_passes
     report = build_report(hardware=platform.machine(), framework="TensorFlow/Keras", framework_version=tf.__version__,
-                          model_version=f"lstm-causal-v1-{run.name}", data_manifest_id=metadata["data_manifest_id"],
+                          model_version=f"{version_name}-{run.name}", data_manifest_id=metadata["data_manifest_id"],
                           warmup_policy="one full untimed pass", repetitions=repeats,
                           prediction_unit="one 20-observation sequence ending at one target observation",
                           durations_ms=np.asarray(durations), elapsed_seconds=elapsed, memory_usage_bytes=None,

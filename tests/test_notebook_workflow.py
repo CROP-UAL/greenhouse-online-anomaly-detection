@@ -40,7 +40,8 @@ def test_notebook_imports_shared_when_started_from_notebooks_directory(notebook_
     assert completed.returncode == 0, completed.stderr
 
 
-def test_benchmark_selects_report_run_when_two_runs_exist(tmp_path: Path) -> None:
+@pytest.mark.parametrize("version", ["v1", "v2"])
+def test_benchmark_selects_report_run_when_two_runs_exist(tmp_path: Path, version: str) -> None:
     notebook = json.loads((ROOT / "notebooks" / "03_jetson_benchmark.ipynb").read_text(encoding="utf-8"))
     cells = [cell for cell in notebook["cells"] if cell["cell_type"] == "code"]
     old_id, chosen_id = "20261001T000000Z", "20261104T120000Z"
@@ -49,12 +50,12 @@ def test_benchmark_selects_report_run_when_two_runs_exist(tmp_path: Path) -> Non
         run = lightgbm_base / run_id
         run.mkdir(parents=True)
         (run / "manifest.json").write_text("{}", encoding="utf-8")
-    lstm_run = tmp_path / "experiments" / "runs" / "lstm_causal_v1" / chosen_id
+    lstm_run = tmp_path / "experiments" / "runs" / f"lstm_causal_{version}" / chosen_id
     lstm_run.mkdir(parents=True)
     (lstm_run / "manifest.json").write_text("{}", encoding="utf-8")
     quality = {"paired_test_rows": 31680,
                "lightgbm": {"data_manifest_id": "frozen", "model_version": f"lightgbm-night-context-v1-{chosen_id}"},
-               "lstm": {"data_manifest_id": "frozen", "model_version": f"lstm-causal-v1-{chosen_id}"}}
+               "lstm": {"data_manifest_id": "frozen", "model_version": f"lstm-causal-{version}-{chosen_id}"}}
     report = tmp_path / "results" / "metrics" / "paired_test.json"
     report.parent.mkdir(parents=True)
     report.write_text(json.dumps(quality), encoding="utf-8")

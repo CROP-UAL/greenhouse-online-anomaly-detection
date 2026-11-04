@@ -27,6 +27,7 @@ TRANSFER_PREFIXES = (
     "approaches/lightgbm/v8_online_2meses/reference_run/",
     "experiments/runs/lightgbm_night_v1/",
     "experiments/runs/lstm_causal_v1/",
+    "experiments/runs/lstm_causal_v2/",
     "experiments/runs/edge_reference/",
 )
 
@@ -48,8 +49,11 @@ def _inside_root(path: Path) -> Path:
 
 def inventory(lightgbm_run: Path, lstm_run: Path) -> dict:
     contract = validate_splits()
+    lstm_parent = Path(lstm_run).parent.name
+    if lstm_parent not in ("lstm_causal_v1", "lstm_causal_v2"):
+        raise ValueError("LSTM run must be under lstm_causal_v1 or lstm_causal_v2")
     expected = {"lightgbm": (lightgbm_run, "lightgbm_night_v1", ("model1.txt", "model2.txt")),
-                "lstm": (lstm_run, "lstm_causal_v1", ("model1.keras", "model2.keras"))}
+                "lstm": (lstm_run, lstm_parent, ("model1.keras", "model2.keras"))}
     files: dict[str, Path] = {}
     for split in SPLITS:
         files[str(FILES[split].relative_to(ROOT)).replace("\\", "/")] = FILES[split]
@@ -65,6 +69,8 @@ def inventory(lightgbm_run: Path, lstm_run: Path) -> dict:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         if manifest["data_manifest_id"] != contract["manifest_id"]:
             raise ValueError(f"{approach} run uses a different data manifest")
+        if approach == "lstm" and manifest.get("schema_version") != lstm_parent.replace("_", "-"):
+            raise ValueError("LSTM run directory and schema version disagree")
         for index, name in enumerate(names, 1):
             path = ROOT / relative / name
             if sha256(path) != manifest[f"model{index}_sha256"]:
@@ -80,7 +86,7 @@ def inventory(lightgbm_run: Path, lstm_run: Path) -> dict:
         traces[approach] = pd.read_parquet(source, columns=["timestamp", "split", "ground_truth_binary",
                                                              "ground_truth_type", "episode_id", "data_manifest_id",
                                                              "model_version"])
-        expected_version = ("lightgbm-night-context-v1-" if approach == "lightgbm" else "lstm-causal-v1-") + Path(run_ids[approach]).name
+        expected_version = ("lightgbm-night-context-v1-" if approach == "lightgbm" else f"lstm-causal-{lstm_parent[-2:]}-") + Path(run_ids[approach]).name
         if len(traces[approach]) != 31680 or set(traces[approach].model_version) != {expected_version}:
             raise ValueError(f"{approach} trace does not belong to the selected run")
         files[f"experiments/runs/edge_reference/{name}"] = source

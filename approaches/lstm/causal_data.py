@@ -20,11 +20,13 @@ SOURCE_ROOT = Path(__file__).resolve().parent
 
 from approaches.lstm.src.feature_engineering import engineer_features  # noqa: E402
 from approaches.lstm.src.scaling import MODEL_FEATURES  # noqa: E402
+from approaches.lstm.src.config_injection import SENSORES_STUCK  # noqa: E402
 from approaches.lstm.src.diagnostic_features_model2 import (  # noqa: E402
     TARGET_SENSORS, add_physical_diagnostic_features, add_relationship_diagnostic_features,
 )
 
 ALL_SENSORS = tuple(MODEL_FEATURES[:12])
+STUCK_SENSORS = tuple(SENSORES_STUCK)
 M2_REDUNDANT = {"PRGINT_minus_PRAD", "ventilation_min", "ventilation_max"}
 for _sensor in TARGET_SENSORS:
     M2_REDUNDANT.update({f"{_sensor}_distance_to_min", f"{_sensor}_distance_to_max",
@@ -55,7 +57,20 @@ def _causal_diagnostics(frame: pd.DataFrame) -> pd.DataFrame:
     return add_relationship_diagnostic_features(output)
 
 
-def prepare_features() -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, pd.DataFrame], dict]:
+def _stuck_run_lengths(frame: pd.DataFrame, *, cap: int = 20) -> pd.DataFrame:
+    """Consecutive identical readings ending at each row, using past data only."""
+    result = pd.DataFrame(index=frame.index)
+    for sensor in STUCK_SENSORS:
+        values = frame[sensor]
+        same = values.eq(values.shift()) & values.notna() & values.shift().notna()
+        groups = (~same).cumsum()
+        result[f"{sensor}_stuck_run_length"] = (
+            same.groupby(groups).cumcount().add(1).clip(upper=cap).astype(np.float32)
+        )
+    return result
+
+
+def prepare_features(*, stuck_context: bool = False) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, pd.DataFrame], dict]:
     contract = validate_splits()
     physical = {name: load_split(name) for name in SPLITS}
     joined = pd.concat([physical[name].assign(_split=name, _row=np.arange(len(physical[name])))
@@ -72,6 +87,8 @@ def prepare_features() -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], di
     if joined.loc[:, ALL_SENSORS].isna().any().any():
         raise ValueError("Causal imputation left missing sensor values")
     engineered = engineer_features(joined)
+    if stuck_context:
+        run_lengths = _stuck_run_lengths(engineered)
     m1_values = engineered.loc[:, MODEL_FEATURES].replace([np.inf, -np.inf], np.nan)
     m1_fill = m1_values.loc[engineered._split.eq("train")].median()
     m1_values = m1_values.fillna(m1_fill)
@@ -81,9 +98,13 @@ def prepare_features() -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], di
     scaler1 = StandardScaler().fit(m1_values.loc[train_mask])
     matrix1 = np.column_stack([scaler1.transform(m1_values).astype(np.float32),
                                engineered.any_sensor_was_missing.to_numpy(np.float32)])
-    if matrix1.shape[1] != 19:
-        raise ValueError("Model 1 must retain 19 inputs per timestep")
+    if stuck_context:
+        matrix1 = np.column_stack([matrix1, run_lengths.to_numpy(np.float32) / 20.0])
+    if matrix1.shape[1] != (27 if stuck_context else 19):
+        raise ValueError("Unexpected Model 1 input width")
     diagnostics = _causal_diagnostics(engineered)
+    if stuck_context:
+        diagnostics = pd.concat([diagnostics, run_lengths], axis=1)
     selected = [column for column in diagnostics.columns
                 if column not in M2_EXCLUDE and column not in M2_REDUNDANT
                 and not column.endswith("_out_of_range") and not column.endswith("_interpolated")
@@ -102,10 +123,12 @@ def prepare_features() -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], di
     offsets = np.cumsum([0] + [ROWS[name] for name in SPLITS])
     m1 = {name: matrix1[offsets[i]:offsets[i + 1]] for i, name in enumerate(SPLITS)}
     m2 = {name: matrix2[offsets[i]:offsets[i + 1]] for i, name in enumerate(SPLITS)}
-    metadata = {"model1_features": list(MODEL_FEATURES) + ["any_sensor_was_missing"],
+    metadata = {"model1_features": list(MODEL_FEATURES) + ["any_sensor_was_missing"] + (list(run_lengths.columns) if stuck_context else []),
                 "model2_features": list(matrix2_df.columns), "model2_feature_count": matrix2.shape[1],
                 "data_manifest_id": contract["manifest_id"], "imputation": "past-only forward fill, then training median",
                 "model2_temporal_features": "past-only replacements for negative shifts and centred windows"}
+    if stuck_context:
+        metadata["stuck_context"] = "consecutive identical readings by source eligible sensor, capped at 20; Model 1 divided by 20"
     return m1, m2, physical, metadata
 
 

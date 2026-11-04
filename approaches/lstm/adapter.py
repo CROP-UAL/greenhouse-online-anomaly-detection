@@ -15,7 +15,8 @@ from shared.contract import ROOT, ANOMALIES, SOURCE_TO_CANONICAL, SPLITS, sha256
 from shared.trace import make_trace
 
 SOURCE_CLASSES = tuple(SOURCE_TO_CANONICAL)
-RUNS = ROOT / "experiments" / "runs" / "lstm_causal_v1"
+RUNS = ROOT / "experiments" / "runs" / "lstm_causal_v2"
+VERSION = "lstm-causal-v2"
 
 
 def _tensorflow():
@@ -23,9 +24,9 @@ def _tensorflow():
     return tf
 
 
-def _binary_model(tf):
+def _binary_model(tf, features: int = 20):
     return tf.keras.Sequential([
-        tf.keras.layers.Input(shape=(20, 19)),
+        tf.keras.layers.Input(shape=(20, features)),
         tf.keras.layers.LSTM(64, return_sequences=True),
         tf.keras.layers.Dropout(0.2), tf.keras.layers.LSTM(32),
         tf.keras.layers.Dropout(0.2), tf.keras.layers.Dense(16, activation="relu"),
@@ -52,14 +53,14 @@ def _weights(y: np.ndarray) -> dict[int, float]:
 def train() -> Path:
     tf = _tensorflow()
     tf.keras.utils.set_random_seed(42)
-    m1, m2, physical, metadata = prepare_features()
+    m1, m2, physical, metadata = prepare_features(stuck_context=True)
     run = RUNS / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     run.mkdir(parents=True, exist_ok=False)
     x1_train, train_rows = windows(m1, "train")
     x1_val, val_rows = windows(m1, "validation")
     y1_train = physical["train"].tipo_anomalia.notna().to_numpy(np.int8)[train_rows]
     y1_val = physical["validation"].tipo_anomalia.notna().to_numpy(np.int8)[val_rows]
-    model1 = _binary_model(tf)
+    model1 = _binary_model(tf, m1["train"].shape[1])
     model1.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=0.001), loss="binary_crossentropy",
                    metrics=["accuracy", tf.keras.metrics.Precision(name="precision"), tf.keras.metrics.Recall(name="recall"),
                             tf.keras.metrics.AUC(name="roc_auc"), tf.keras.metrics.AUC(name="pr_auc", curve="PR")])
@@ -97,7 +98,7 @@ def train() -> Path:
                   tf.keras.callbacks.ReduceLROnPlateau(monitor="val_loss", mode="min", factor=0.5, patience=3, min_lr=1e-6)]
     history2 = model2.fit(x2_train, y2_train, validation_data=(x2_val, y2_val), epochs=50, batch_size=256,
                           class_weight=_weights(y2_train), callbacks=callbacks2, verbose=2)
-    manifest = {"schema_version": "lstm-causal-v1", "created_utc": datetime.now(timezone.utc).isoformat(),
+    manifest = {"schema_version": VERSION, "created_utc": datetime.now(timezone.utc).isoformat(),
                 "data_manifest_id": metadata["data_manifest_id"], "seed": 42, "window_length": 20,
                 "binary_threshold_validation_f1": threshold, "tensorflow": tf.__version__,
                 "feature_contract": metadata, "class_order_source": list(SOURCE_CLASSES),
@@ -113,7 +114,10 @@ def export_test(run: Path) -> tuple[Path, Path]:
     manifest = json.loads((run / "manifest.json").read_text(encoding="utf-8"))
     if sha256(run / "model1.keras") != manifest["model1_sha256"] or sha256(run / "model2.keras") != manifest["model2_sha256"]:
         raise ValueError("LSTM model hashes changed")
-    m1, m2, physical, metadata = prepare_features()
+    version_name = manifest["schema_version"]
+    if version_name not in ("lstm-causal-v1", VERSION):
+        raise ValueError(f"Unknown LSTM schema: {version_name}")
+    m1, m2, physical, metadata = prepare_features(stuck_context=version_name == VERSION)
     if metadata["data_manifest_id"] != manifest["data_manifest_id"] or metadata["model1_features"] != manifest["feature_contract"]["model1_features"] or metadata["model2_features"] != manifest["feature_contract"]["model2_features"]:
         raise ValueError("LSTM feature or data contract changed")
     model1 = tf.keras.models.load_model(run / "model1.keras", compile=False)
@@ -128,7 +132,7 @@ def export_test(run: Path) -> tuple[Path, Path]:
     prediction = np.argmax(model2.predict(x2, batch_size=256, verbose=0), axis=1) if len(selected) else np.empty(0, int)
     stage2 = np.full(len(targets), None, dtype=object)
     stage2[selected] = [SOURCE_TO_CANONICAL[SOURCE_CLASSES[i]] for i in prediction]
-    version = f"lstm-causal-v1-{run.name}"
+    version = f"{version_name}-{run.name}"
     trace = make_trace(physical["test"], split="test", scores=scores, binary=detected, stage2=stage2,
                        model_version=version, data_manifest_id=metadata["data_manifest_id"])
     anomalies = np.flatnonzero(physical["test"].tipo_anomalia.notna().to_numpy())

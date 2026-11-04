@@ -30,7 +30,7 @@ Desde la raíz del repositorio, con `.venv`:
 ```bash
 ./.venv/bin/python -m shared.reporting.edge_bundle \
   --lightgbm-run experiments/runs/lightgbm_night_v1/REEMPLAZAR_RUN \
-  --lstm-run experiments/runs/lstm_causal_v1/REEMPLAZAR_RUN \
+  --lstm-run experiments/runs/lstm_causal_v2/REEMPLAZAR_RUN \
   --destination /ruta/privada/edge-transfer
 ```
 

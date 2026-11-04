@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
-from approaches.lstm.causal_data import M2_EXCLUDE, M2_REDUNDANT, _causal_diagnostics, windows
+from approaches.lstm.causal_data import M2_EXCLUDE, M2_REDUNDANT, STUCK_SENSORS, _causal_diagnostics, _stuck_run_lengths, windows
 from approaches.lightgbm.night_context import ADDED_FEATURES, co2_gradient, night_flag
 from approaches.lightgbm.v8_online_2meses.seis_anomalias.settings import BASE_FEATURES
 from approaches.lstm.src.scaling import MODEL_FEATURES
@@ -55,6 +55,17 @@ def test_causal_lstm_diagnostics_do_not_change_before_future_perturbation():
     frame.loc[44, "XTINV"] += 1000
     changed = _causal_diagnostics(engineer_features(frame))
     assert_frame_equal(earlier.iloc[:44], changed.iloc[:44])
+
+
+def test_stuck_context_tracks_only_past_eligible_sensor_values():
+    assert "PRAD" not in STUCK_SENSORS
+    frame = pd.DataFrame({sensor: np.arange(7, dtype=float) for sensor in STUCK_SENSORS})
+    frame["XCO2I"] = [1, 2, 2, 2, 3, 3, 4]
+    features = _stuck_run_lengths(frame)
+    assert features["XCO2I_stuck_run_length"].tolist() == [1, 1, 2, 3, 1, 2, 1]
+    frame.loc[6, "XCO2I"] = 3
+    changed = _stuck_run_lengths(frame)
+    assert_frame_equal(features.iloc[:6], changed.iloc[:6])
 
 
 def test_trace_routing_and_episode_ids():
