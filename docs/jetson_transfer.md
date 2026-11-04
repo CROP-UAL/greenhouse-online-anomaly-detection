@@ -17,7 +17,7 @@ Estos archivos, unos 14,5 MB en total, bastan para los tres notebooks. Si tambi�
 
 Usar el entorno TensorFlow que ya funcione en la Orin Nano. Comprobar que el mismo `.venv` importa `tensorflow`, `lightgbm`, `pandas`, `pyarrow`, `sklearn`, `IPython` y `jupyterlab`, y que `python -m pip check` no informa conflictos. No instalar a ciegas `requirements-notebooks-linux.txt` sobre ese entorno: fija TensorFlow para el PC Linux x86-64. Registrar `python -m pip freeze`, versión de JetPack y memoria disponible para documentar el run.
 
-Desde la raíz, ejecutar `notebooks/01_train_and_export.ipynb` y `02_compare_quality.ipynb`. El segundo crea `results/metrics/paired_test.json` solo cuando ambas trazas tienen los mismos 31.680 objetivos, etiquetas y manifiesto. Luego abrir `03_jetson_benchmark.ipynb` con `TRANSFER = None` (valor inicial). Si hay varios runs del mismo enfoque, fijar `LIGHTGBM_RUN` y `LSTM_RUN` en su primera celda. El notebook carga las trazas antes de repetir inferencia para comprobar paridad y después cronometra. No publicar las salidas de los notebooks.
+Desde la raíz, ejecutar `notebooks/01_train_and_export.ipynb` y `02_compare_quality.ipynb`. El segundo crea `results/metrics/paired_test.json` solo cuando ambas trazas tienen los mismos 31.680 objetivos, etiquetas y manifiesto. Luego abrir `03_jetson_benchmark.ipynb` con `TRANSFER = None` (valor inicial). El tercer notebook selecciona los runs indicados por `model_version` en el informe emparejado, aunque existan otros runs locales; cualquier ruta manual debe coincidir con ese informe. Carga las trazas antes de repetir inferencia para comprobar paridad y después cronometra. No publicar las salidas de los notebooks.
 
 ## Si el entrenamiento se hizo en otro PC Linux
 
