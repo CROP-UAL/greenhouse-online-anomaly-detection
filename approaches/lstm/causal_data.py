@@ -70,7 +70,7 @@ def _stuck_run_lengths(frame: pd.DataFrame, *, cap: int = 20) -> pd.DataFrame:
     return result
 
 
-def prepare_features(*, stuck_context: bool = False) -> tuple[dict[str, np.ndarray], dict[str, np.ndarray], dict[str, pd.DataFrame], dict]:
+def prepare_features(*, stuck_context: bool = False, return_benchmark_state: bool = False):
     contract = validate_splits()
     physical = {name: load_split(name) for name in SPLITS}
     joined = pd.concat([physical[name].assign(_split=name, _row=np.arange(len(physical[name])))
@@ -129,7 +129,63 @@ def prepare_features(*, stuck_context: bool = False) -> tuple[dict[str, np.ndarr
                 "model2_temporal_features": "past-only replacements for negative shifts and centred windows"}
     if stuck_context:
         metadata["stuck_context"] = "consecutive identical readings by source eligible sensor, capped at 20; Model 1 divided by 20"
-    return m1, m2, physical, metadata
+    if not return_benchmark_state:
+        return m1, m2, physical, metadata
+    # Fitted preprocessing and causal validation history are setup inputs for a
+    # measured test replay. The trained models and their feature order stay fixed.
+    benchmark_state = {"stuck_context": stuck_context, "data_manifest_id": contract["manifest_id"],
+                       "sensor_medians": medians.copy(), "model1_fill": m1_fill.copy(),
+                       "model2_fill": m2_fill.copy(), "model1_scaler": scaler1,
+                       "model2_scaler": scaler2, "model2_base_features": tuple(selected),
+                       "model2_features": tuple(matrix2_df.columns),
+                       "history_frame": joined.loc[joined._split.eq("validation")].tail(20).copy(),
+                       "history_model1": m1["validation"][-19:].copy(),
+                       "history_model2": m2["validation"][-19:].copy()}
+    return m1, m2, physical, metadata, benchmark_state
+
+
+def transform_test_for_benchmark(raw_test: pd.DataFrame, state: dict) -> tuple[np.ndarray, np.ndarray]:
+    """Apply the unchanged causal feature contract to a preloaded test prefix.
+
+    Train-fitted fills/scalers and the last 20 validation rows are setup state;
+    this call performs the test portion of feature preparation inside the timer.
+    """
+    if raw_test.empty or not raw_test.FECHA.is_monotonic_increasing or not raw_test.FECHA.is_unique:
+        raise ValueError("Test prefix must be nonempty, ordered and unique")
+    test = raw_test.copy()
+    test["_split"] = "test"
+    test["_row"] = np.arange(len(test))
+    missing = test.loc[:, ALL_SENSORS].isna()
+    test["any_sensor_was_missing"] = missing.any(axis=1).astype(np.float32)
+    for sensor in ALL_SENSORS:
+        test[f"{sensor}_was_missing"] = missing[sensor].astype(np.float32)
+    frame = pd.concat([state["history_frame"], test], ignore_index=True)
+    frame.loc[:, ALL_SENSORS] = frame.loc[:, ALL_SENSORS].ffill().fillna(state["sensor_medians"])
+    engineered = engineer_features(frame)
+    stuck_context = state["stuck_context"]
+    if stuck_context:
+        run_lengths = _stuck_run_lengths(engineered)
+    model1_values = engineered.loc[:, MODEL_FEATURES].replace([np.inf, -np.inf], np.nan)
+    model1_values = model1_values.fillna(state["model1_fill"])
+    matrix1 = np.column_stack([state["model1_scaler"].transform(model1_values).astype(np.float32),
+                               engineered.any_sensor_was_missing.to_numpy(np.float32)])
+    if stuck_context:
+        matrix1 = np.column_stack([matrix1, run_lengths.to_numpy(np.float32) / 20.0])
+    diagnostics = _causal_diagnostics(engineered)
+    if stuck_context:
+        diagnostics = pd.concat([diagnostics, run_lengths], axis=1)
+    matrix2_values = diagnostics.loc[:, state["model2_base_features"]].replace([np.inf, -np.inf], np.nan).copy()
+    ratios = [column for column in ("PRGINT_PRAD_ratio", "PRGINT_PRAD_relative_difference", "co2_per_ventilation")
+              if column in matrix2_values]
+    for column in ratios:
+        matrix2_values[f"{column}_was_undefined"] = matrix2_values[column].isna().astype(np.float32)
+    if tuple(matrix2_values.columns) != state["model2_features"]:
+        raise ValueError("Benchmark changed Model 2 feature order")
+    matrix2_values = matrix2_values.fillna(state["model2_fill"])
+    matrix2 = state["model2_scaler"].transform(matrix2_values).astype(np.float32)
+    if not np.isfinite(matrix1).all() or not np.isfinite(matrix2).all():
+        raise ValueError("Benchmark feature preparation left nonfinite values")
+    return matrix1[-len(test):], matrix2[-len(test):]
 
 
 def windows(matrices: dict[str, np.ndarray], split: str, *, length: int = 20,

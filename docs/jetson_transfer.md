@@ -58,4 +58,25 @@ Hacer checkout del commit indicado en `bundle_manifest.json`. Con el bundle copi
 
 La instalación exige el mismo commit, comprueba hashes y no reemplaza un archivo diferente. Abrir `notebooks/03_jetson_benchmark.ipynb`, configurar `TRANSFER` y ejecutar sus celdas. Primero comprueba que las predicciones coinciden con las del PC; después ejecuta los benchmarks. Los informes locales quedan en `results/reports/`.
 
-Los cronómetros actuales tienen alcances diferentes: LightGBM incluye extracción causal y reglas por objetivo; LSTM mide los modelos sobre ventanas ya preparadas. Registrar ambos valores con `prediction_unit` y `timing_scope`, sin llamarlos una latencia total equivalente. Tampoco convertir ms/secuencia LSTM a ms/observación por división automática.
+Los informes antiguos de latencia tienen alcances diferentes: LightGBM incluye extracción causal y reglas por objetivo; LSTM mide los modelos sobre ventanas ya preparadas. El notebook 03 genera ahora una medición emparejada del replay completo. Mantener los informes antiguos identificados por `prediction_unit` y `timing_scope`; no convertir ms/secuencia LSTM a ms/observación por división automática.
+
+## Razón de velocidad del replay causal completo
+
+El benchmark adicional mide un **replay completo desde las observaciones físicas ya cargadas hasta la etiqueta final**, sobre exactamente los mismos timestamps de test. LightGBM conserva sus 68 variables, persistencia y reglas; LSTM conserva sus 27/154 variables, imputación causal, escalado ajustado en train, ventanas de 20 y umbral. La preparación de test LSTM se rehace dentro del cronómetro y se comprueba contra las matrices originales; las predicciones de ambos enfoques deben coincidir con sus trazas. La carga de archivos y modelos y el ajuste de escaladores con train quedan fuera del cronómetro en ambos casos.
+
+En la Jetson, con los runs y el informe emparejado disponibles, volver a ejecutar **solo `notebooks/03_jetson_benchmark.ipynb`**. Dejar `TRANSFER = None` si los notebooks 01 y 02 se ejecutaron antes en esa misma placa y se conservan sus archivos. En caso de traslado, indicar la ruta del bundle en `TRANSFER`. El notebook usa `ROWS = 31680` y `REPEATS = 5` para la cifra principal; se puede cambiar temporalmente `ROWS` a 2000 para una prueba corta y restaurarlo después.
+
+Como alternativa desde la raíz del repositorio, con los mismos runs del informe emparejado disponibles, ejecutar:
+
+```bash
+python -m shared.benchmarking.full_pipeline \
+  --lightgbm-run experiments/runs/lightgbm_night_v1/20261105T093300Z \
+  --lstm-run experiments/runs/lstm_causal_v2/20261105T093456Z \
+  --rows 2000 --repeats 5
+```
+
+Para la cifra principal del artículo, ejecutar el mismo comando con `--rows 31680 --repeats 5`, si se dispone del tiempo necesario. El script hace una pasada completa sin cronometrar por enfoque, mide LightGBM antes y después del LSTM, y rechaza el resultado si las predicciones difieren, cambia el contrato de variables, la media LightGBM deriva más de un 10 % entre las dos mediciones o los tiempos de las pasadas LSTM difieren más de un 20 % de su mediana. Guarda el informe JSON y los dos informes LightGBM bajo `results/reports/`; conservarlos juntos y trasladarlos de vuelta al PC para el artículo.
+
+El campo `speed_ratio_lightgbm_over_lstm_full_replay` es una razón de **throughput de replay causal completo**, expresada como tiempo LSTM por objetivo dividido por tiempo LightGBM por objetivo. La preparación LSTM se ejecuta vectorialmente sobre el prefijo de test y luego se infiere cada objetivo en secuencia; LightGBM extrae variables por objetivo. Describir esa política junto al número de objetivos, repeticiones, JetPack, modo de potencia y temperatura. Esta razón no es una medida de latencia de una decisión individual en un flujo vivo; para esa otra afirmación haría falta un benchmark LSTM incremental por lectura.
+
+Redacción para el artículo tras obtener un informe válido: «En la Jetson Orin Nano, durante un replay causal de **N** timestamps físicos idénticos, desde variables de entrada ya cargadas hasta etiquetas finales, LightGBM procesó **Q₁** objetivos/s y LSTM **Q₂** objetivos/s; la razón de throughput fue **Q₁/Q₂**. El replay incluyó la preparación de variables de test y los dos modelos condicionales, y excluyó carga de archivos/modelos y ajuste de escaladores. La preparación LSTM se calculó vectorialmente sobre el bloque de test; estos valores no miden latencia individual de streaming». Sustituir las variables solo por datos del JSON resultante y conservar sus informes de respaldo.
