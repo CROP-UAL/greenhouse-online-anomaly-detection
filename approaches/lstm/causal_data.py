@@ -138,12 +138,15 @@ def windows(matrices: dict[str, np.ndarray], split: str, *, length: int = 20,
         raise ValueError(split)
     order = list(SPLITS)
     index = order.index(split)
-    history = np.concatenate([matrices[name] for name in order[:index]], axis=0)[-(length - 1):] if index else np.empty((0, matrices[split].shape[1]), np.float32)
-    whole = np.concatenate([history, matrices[split]], axis=0)
+    history = (np.concatenate([matrices[name][-(length - 1):] for name in order[:index]], axis=0)[-(length - 1):]
+               if index else np.empty((0, matrices[split].shape[1]), np.float32))
     first = length - 1 - len(history)
     target_rows = np.arange(max(0, first), len(matrices[split]), dtype=np.int64) if targets is None else np.asarray(targets, np.int64)
     if (target_rows < max(0, first)).any() or (target_rows >= len(matrices[split])).any():
         raise ValueError("Target lacks causal history or lies outside its split")
-    ends = target_rows + len(history)
-    indices = ends[:, None] - np.arange(length - 1, -1, -1)[None, :]
-    return np.ascontiguousarray(whole[indices], dtype=np.float32), target_rows
+    indices = target_rows[:, None] - np.arange(length - 1, -1, -1)[None, :]
+    result = matrices[split][np.clip(indices, 0, len(matrices[split]) - 1)]
+    from_history = indices < 0
+    if from_history.any():
+        result[from_history] = history[indices[from_history]]
+    return np.ascontiguousarray(result, dtype=np.float32), target_rows
