@@ -16,7 +16,8 @@ from shared.benchmarking.report import build_report, save_report
 from shared.contract import ROOT, SOURCE_TO_CANONICAL, sha256, validate_splits
 
 
-def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
+def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5,
+                  output: Path | None = None, masks_inside_timer: bool = False) -> Path:
     """Time causal extraction, both model decisions and LightGBM's rules per target."""
     if rows <= 0 or repeats <= 0:
         raise ValueError("Rows and repetitions must be positive")
@@ -33,8 +34,18 @@ def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
     n = min(rows, len(test))
     raw = np.ascontiguousarray(test.loc[:, pipeline.SENSORS].to_numpy(np.float32)[:n])
     times = test.Fecha.to_numpy("datetime64[ns]").astype(np.int64)[:n]
+    if masks_inside_timer and not np.array_equal(
+            times, times[0] + np.arange(n, dtype=np.int64) * 30_000_000_000):
+        raise ValueError("Nominal LightGBM clock differs from the frozen 30-second row policy")
     physical_times = test.FECHA.to_numpy("datetime64[ns]").astype(np.int64)[:n]
     masks = np.ascontiguousarray(test.loc[:, pipeline.MASK_COLUMNS].to_numpy(np.uint8)[:n])
+    if masks_inside_timer:
+        absent = np.isnan(raw)
+        zeros = np.isfinite(raw) & (raw == 0)
+        partial_loss = (absent.sum(axis=1) >= 3) & (zeros.sum(axis=1) >= 4)
+        expected_masks = (absent | (zeros & partial_loss[:, None])).astype(np.uint8)
+        if not np.array_equal(expected_masks, masks):
+            raise ValueError("LightGBM missingness mask contract changed")
     old = np.ascontiguousarray(history.loc[:, pipeline.SENSORS].to_numpy(np.float32))
     old_times = history.Fecha.to_numpy("datetime64[ns]").astype(np.int64)
     old_masks = np.ascontiguousarray(history.loc[:, pipeline.MASK_COLUMNS].to_numpy(np.uint8))
@@ -61,10 +72,18 @@ def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
         pass_start = perf_counter_ns()
         for index in range(n):
             start = perf_counter_ns()
+            if masks_inside_timer:
+                missing = np.isnan(raw[index])
+                zero = np.isfinite(raw[index]) & (raw[index] == 0)
+                partial_loss = missing.sum() >= 3 and zero.sum() >= 4
+                current_mask = (missing | (zero & partial_loss)).astype(np.uint8)
+            else:
+                current_mask = masks[index]
+            current_time = int(times[0]) + index * 30_000_000_000 if masks_inside_timer else int(times[index])
             vector = np.empty(len(manifest["feature_names"]), np.float32)
             cut = len(pipeline.BASE_FEATURES) + len(pipeline.EXTRA_FEATURES)
-            vector[:cut] = extractor.step(raw[index], times[index], masks[index])
-            vector[cut:len(pipeline.FEATURES)] = masks[index]
+            vector[:cut] = extractor.step(raw[index], current_time, current_mask)
+            vector[cut:len(pipeline.FEATURES)] = current_mask
             physical_ns = int(physical_times[index]) % pipeline.DAY_NS
             vector[pipeline.COS_HOUR_INDEX] = np.float32(np.cos(2 * np.pi * physical_ns / pipeline.DAY_NS))
             vector[-2] = np.float32(physical_ns >= 20 * 3600 * 1_000_000_000 or physical_ns < 7 * 3600 * 1_000_000_000)
@@ -74,7 +93,7 @@ def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
                 calibration.thresh_std, calibration.k_long, calibration.thresh_high,
                 calibration.k_short, long_count, short_count)
             rule = pipeline.rule_one(raw[index], np.isnan(raw[index]).astype(np.uint8),
-                                     int(times[index]), rule_state, policy, lower, upper)
+                                     current_time, rule_state, policy, lower, upper)
             if detected or rule != pipeline.RULE_NONE:
                 source_label = pipeline.CLASSES[int(np.argmax(model2.predict(vector.reshape(1, -1), num_threads=1)[0]))]
                 predictions[index] = SOURCE_TO_CANONICAL[source_label]
@@ -100,9 +119,14 @@ def run_benchmark(run: Path, *, rows: int = 2000, repeats: int = 5) -> Path:
         warmup_policy="one full untimed pass", repetitions=repeats, prediction_unit="target observation",
         durations_ms=np.concatenate(samples) / 1e6, elapsed_seconds=elapsed_ns / 1e9,
         memory_usage_bytes=None,
-        timing_scope="causal features including night and CO2 gradient + binary + rules + conditional multiclass; excludes loading and I/O")
+        timing_scope=("missingness mask + nominal clock + causal features including night and CO2 gradient + binary + rules + conditional multiclass; excludes loading and I/O"
+                      if masks_inside_timer else
+                      "causal features including night and CO2 gradient + binary + rules + conditional multiclass; excludes loading and I/O"))
     report["parity_with_test_trace"] = parity
     report["rows_per_pass"] = n
-    output = ROOT / "results" / "reports" / f"lightgbm_night_benchmark_{run.name}.json"
+    report["masks_inside_timer"] = masks_inside_timer
+    if output is None:
+        output = ROOT / "results" / "reports" / f"lightgbm_night_benchmark_{run.name}.json"
+    output = Path(output)
     save_report(report, output)
     return output
